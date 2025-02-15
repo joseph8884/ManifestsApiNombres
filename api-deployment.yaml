@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: joseph888/apinombres:latest  # Replace with your actual image
+        ports:
+        - containerPort: 8080  # Update with your app's port
+        env:
+        - name: URLMONGO
+          value: "mongodb://admin:admin@mongodb-service:27017/personas?authSource=admin"
+        resources:
+          requests:
+            cpu: "10m"
+          limits:
+            cpu: "350m"

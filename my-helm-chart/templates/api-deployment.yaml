@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "my-helm-chart.fullname" . }}-api
+  labels:
+    app: {{ .Values.app.name }}
+spec:
+  replicas: {{ .Values.app.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}
+    spec:
+      containers:
+      - name: {{ .Values.app.name }}
+        image: {{ .Values.app.image }}
+        ports:
+        - containerPort: {{ .Values.api.service.targetPort }}
+        env:
+        - name: URLMONGO
+          value: {{ .Values.app.env.URLMONGO | quote }}
+        resources:
+          requests:
+            cpu: "{{ .Values.api.resources.requests.cpu }}"
+          limits:
+            cpu: "{{ .Values.api.resources.limits.cpu }}"

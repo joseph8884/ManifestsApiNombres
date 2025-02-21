@@ -13,13 +13,13 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: api-service
+            name: {{ .Release.Name }}-api-service
             port:
               number: 80
       - path: /front(/|$)(.*)  
         pathType: Prefix
         backend:
           service:
-            name: front-service
+            name: {{ .Release.Name }}-front-service
             port:
               number: 80

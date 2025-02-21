@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb-personas
+  name: {{ .Release.Name }}-mongodb
 spec:
-  replicas: {{ .Values.mongodb.replicaCount }}
+  replicas: {{ .Values.mongodb.replicas }}
   selector:
     matchLabels:
-      app: mongodb-personas
+      app: {{ .Release.Name }}-mongodb
   template:
     metadata:
       labels:
-        app: mongodb-personas
+        app: {{ .Release.Name }}-mongodb
     spec:
       containers:
       - name: mongodb
-        image: {{ .Values.mongodb.image.repository }}:{{ .Values.mongodb.image.tag }}
+        image: {{ .Values.mongodb.image }}
         ports:
         - containerPort: 27017
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
-          value: {{ .Values.mongodb.rootUsername | quote }}
+          value: {{ .Values.mongodb.rootUsername }}
         - name: MONGO_INITDB_ROOT_PASSWORD
-          value: {{ .Values.mongodb.rootPassword | quote }}
+          value: {{ .Values.mongodb.rootPassword }}
         - name: MONGO_INITDB_DATABASE
-          value: {{ .Values.mongodb.database | quote }}
+          value: {{ .Values.mongodb.database }}
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db

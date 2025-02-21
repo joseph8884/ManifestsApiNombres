@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-deployment
+spec:
+  replicas: {{ .Values.front.replicaCount }}
+  selector:
+    matchLabels:
+      app: front
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      containers:
+      - name: front
+        image: {{ .Values.front.image.repository }}:{{ .Values.front.image.tag | default "latest" }}
+        ports:
+        - containerPort: {{ .Values.front.service.port }}
+        resources:
+          requests:
+            cpu: {{ .Values.front.resources.requests.cpu }}
+          limits:
+            cpu: {{ .Values.front.resources.limits.cpu }}

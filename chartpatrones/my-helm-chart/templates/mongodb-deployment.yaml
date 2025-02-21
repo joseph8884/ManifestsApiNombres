@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-personas
+spec:
+  replicas: {{ .Values.mongodb.replicaCount }}
+  selector:
+    matchLabels:
+      app: mongodb-personas
+  template:
+    metadata:
+      labels:
+        app: mongodb-personas
+    spec:
+      containers:
+      - name: mongodb
+        image: {{ .Values.mongodb.image.repository }}:{{ .Values.mongodb.image.tag }}
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: {{ .Values.mongodb.rootUsername | quote }}
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: {{ .Values.mongodb.rootPassword | quote }}
+        - name: MONGO_INITDB_DATABASE
+          value: {{ .Values.mongodb.database | quote }}
+        volumeMounts:
+        - name: mongo-storage
+          mountPath: /data/db
+        resources:
+          requests:
+            cpu: {{ .Values.mongodb.resources.requests.cpu }}
+          limits:
+            cpu: {{ .Values.mongodb.resources.limits.cpu }}
+      volumes:
+      - name: mongo-storage
+        persistentVolumeClaim:
+          claimName: mongo-pvc

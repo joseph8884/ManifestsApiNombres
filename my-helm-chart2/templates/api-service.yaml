@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "my-helm-chart2.fullname" . }}-api-service
+spec:
+  selector:
+    app: apiprod
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080  # Update with your app's port
+  type: ClusterIP

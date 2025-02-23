@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "my-helm-chart.fullname" . }}-mongodb
+  name: {{ include "my-helm-chart2.fullname" . }}-mongodb-service
 spec:
   selector:
-    app: mongodb-personas
+    app: mongodb
   ports:
     - protocol: TCP
       port: 27017

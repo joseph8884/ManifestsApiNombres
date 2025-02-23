@@ -1,25 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-deployment
+  name: {{ include "my-helm-chart2.fullname" . }}-api-nombres
+  labels:
+    app: apiprod
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: api
+      app: apiprod
   template:
     metadata:
       labels:
-        app: api
+        app: apiprod
     spec:
       containers:
-      - name: api
-        image: joseph888/apinombres:latest  # Replace with your actual image
+      - name: apiprod
+        image: {{ .Values.app.image }}:{{ .Values.image.tag }}
         ports:
         - containerPort: 8080  # Update with your app's port
         env:
         - name: URLMONGO
-          value: "mongodb://admin:admin@mongodb-service:27017/personas?authSource=admin"
+          value: 'mongodb://admin:admin@{{ include "my-helm-chart2.fullname" . }}-mongodb-service:27017/personas?authSource=admin'
         resources:
           requests:
             cpu: "10m"

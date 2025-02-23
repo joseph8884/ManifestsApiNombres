@@ -11,7 +11,7 @@ spec:
     http:
       paths:
       - path: /backend(/|$)(.*)
-        pathType: Prefix
+        pathType: Prefix # cambia 
         backend:
           service:
             name: {{ include "my-helm-chart2.fullname" . }}-api-service

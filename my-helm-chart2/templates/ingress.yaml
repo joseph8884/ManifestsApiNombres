@@ -2,12 +2,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "my-helm-chart2.fullname" . }}-ingress
+  namespace: produccion
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx  # Asegúrate que coincida con tu controlador
   rules:
-  - host: "mi-app.local"  # Define un host válido o elimina esta línea si no usas DNS
     http:
       paths:
       - path: /backend(/|$)(.*)

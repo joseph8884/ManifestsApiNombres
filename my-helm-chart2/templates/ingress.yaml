@@ -6,12 +6,12 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
-  ingressClassName: nginx  # Asegúrate que coincida con tu controlador
+  ingressClassName: nginx
   rules:
-    http:
+  - http:  # Nota el guión (-) aquí para indicar una lista
       paths:
       - path: /backend(/|$)(.*)
-        pathType: Prefix # cambia 
+        pathType: Prefix
         backend:
           service:
             name: {{ include "my-helm-chart2.fullname" . }}-api-service

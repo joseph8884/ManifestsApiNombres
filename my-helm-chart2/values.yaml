@@ -1,23 +1,19 @@
 # Configuración Global
 nameOverride: ""
 fullnameOverride: ""
-
 # Configuración de Service Account
 serviceAccount:
   create: true
   annotations: {}
   name: ""
   automount: true
-
 apiVersion: v1
-
 app:
   name: api
   image: joseph888/apinombres
   replicas: 1
   env:
     URLMONGO: "mongodb://admin:admin@{{ include \"my-helm-chart.fullname\" . }}-mongodb-service:27017/personas?authSource=admin"
-
 api:
   service:
     targetPort: 8080
@@ -26,7 +22,6 @@ api:
       cpu: "10m"
     limits:
       cpu: "350m"
-
 front:
   name: front
   image: abril21/k8spersonas-front:latest
@@ -37,7 +32,6 @@ front:
       cpu: "50m"
     limits:
       cpu: "350m"
-
 mongodb:
   name: mongodb
   image: mongo:latest
@@ -53,16 +47,13 @@ mongodb:
       cpu: "50m"
     limits:
       cpu: "350m"
-
 hpa:
   minReplicas: 1
   maxReplicas: 4
   averageUtilization: 75
-
 ingress:
   enabled: true
   apiPath: /backend(/|$)(.*)
   frontPath: /front(/|$)(.*)
-
 image:
-  tag: e08dbfb047622d8a5cfe9ead7866f17be59bbc03
+  tag: 274947b33c8c30e0f17a3e9a3fe65e1da808df43

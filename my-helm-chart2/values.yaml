@@ -56,4 +56,4 @@ ingress:
   apiPath: /backend(/|$)(.*)
   frontPath: /front(/|$)(.*)
 image:
-  tag: 9ecbcec9fa3e592884d795477446367af4b8cbf4
+  tag: 382c0db51efa995598ede14d649aaa16eb7cd080
